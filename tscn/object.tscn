@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://xufcgkkmy1ol"]
+
+[ext_resource type="Script" path="res://src/object.gd" id="1_b3to0"]
+[ext_resource type="Texture2D" uid="uid://c73kdj47pyi14" path="res://asset/img/placeholder/lv1.png" id="2_0q075"]
+
+[node name="object" type="RigidBody2D"]
+script = ExtResource("1_b3to0")
+
+[node name="spr" type="Sprite2D" parent="."]
+texture = ExtResource("2_0q075")
+
+[node name="shape" type="CollisionShape2D" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="shape" type="CollisionShape2D" parent="hitbox"]
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

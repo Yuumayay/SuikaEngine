@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://clx0hqr3btgav"]
+
+[ext_resource type="Script" path="res://src/main.gd" id="1_ibmcn"]
+[ext_resource type="Texture2D" uid="uid://crurq1e4o5w87" path="res://icon.svg" id="2_2lnnv"]
+[ext_resource type="AudioStream" uid="uid://rn7gk308g2eg" path="res://asset/sound/merge.ogg" id="3_qb5sq"]
+[ext_resource type="AudioStream" uid="uid://cp4d62xhup6wv" path="res://asset/sound/drop.ogg" id="4_6iqo7"]
+[ext_resource type="AudioStream" uid="uid://ca4p3iv16ou1y" path="res://asset/sound/bgm.ogg" id="4_sj45h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ogmh"]
+size = Vector2(69, 535)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wocm"]
+size = Vector2(479, 74)
+
+[node name="main" type="Node"]
+script = ExtResource("1_ibmcn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(411, 177)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_right = 7.0
+offset_bottom = 420.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-27, 152.5)
+shape = SubResource("RectangleShape2D_2ogmh")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(759, 177)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2"]
+offset_right = 7.0
+offset_bottom = 420.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(34, 152)
+shape = SubResource("RectangleShape2D_2ogmh")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(419, 590)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D3"]
+offset_left = -8.0
+offset_right = 347.0
+offset_bottom = 7.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(169.5, 37)
+shape = SubResource("RectangleShape2D_0wocm")
+
+[node name="chr" type="Sprite2D" parent="."]
+position = Vector2(660, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2lnnv")
+
+[node name="clamp1" type="Node2D" parent="."]
+position = Vector2(420, 12)
+
+[node name="clamp2" type="Node2D" parent="."]
+position = Vector2(758, 8)
+
+[node name="merge" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qb5sq")
+
+[node name="drop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_6iqo7")
+volume_db = 10.0
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sj45h")
+
+[node name="line" type="ColorRect" parent="."]
+offset_left = 418.0
+offset_top = 219.0
+offset_right = 759.0
+offset_bottom = 223.0
+color = Color(1, 0, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
