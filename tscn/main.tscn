@@ -154,6 +154,7 @@ offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="ui/next"]
 self_modulate = Color(1, 1, 1, 0.568627)
+layout_mode = 0
 offset_left = 898.0
 offset_top = 92.0
 offset_right = 1055.0
@@ -178,6 +179,7 @@ layout_mode = 2
 expand_mode = 1
 
 [node name="Label" type="Label" parent="ui/next"]
+layout_mode = 0
 offset_left = 897.0
 offset_top = 14.0
 offset_right = 1057.0
@@ -252,6 +254,7 @@ text = "BEST SCORE"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="ui/score"]
+layout_mode = 0
 offset_left = 74.0
 offset_top = 16.0
 offset_right = 224.0
@@ -285,6 +288,7 @@ texture = ExtResource("6_g6h84")
 expand_mode = 1
 
 [node name="Label2" type="Label" parent="ui/evo"]
+layout_mode = 0
 offset_left = 891.0
 offset_top = 279.0
 offset_right = 1091.0

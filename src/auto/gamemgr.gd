@@ -117,9 +117,11 @@ func _process(delta):
 		barrel_value = 0
 	else:
 		barrel_value += delta * 0.1
-	rect.material.set("shader_parameter/barrel", barrel_value)
-	rect.material.set("shader_parameter/zoom", barrel_value / 4.0 + 1)
-	rect2.material.set("shader_parameter/strength", barrel_value)
+	
+	# バグってるようにみえるので消した：）
+	#rect.material.set("shader_parameter/barrel", barrel_value)
+	#rect.material.set("shader_parameter/zoom", barrel_value / 4.0 + 1)
+	#rect2.material.set("shader_parameter/strength", barrel_value)
 
 func score_add(v):
 	for i in range(v):
@@ -196,7 +198,8 @@ func _notification(what):
 		print("closed")
 		save_()
 
-const ASSET_PATH := "res://asset/"
+const ASSET_PATH := "res://asset/" # プロジェクトの中に埋め込まれたデータres://
+#const FILEASSET_PATH := "./" # ファイルのオンラインロード
 
 func load_asset(category, v):
 	var ext: String
@@ -209,18 +212,24 @@ func load_asset(category, v):
 	var path_placeholder = ASSET_PATH + category + "/placeholder/" + v + ext
 	var path_placeholder_placeholder = ASSET_PATH + category + "/placeholder/placeholder" + ext
 	if FileAccess.file_exists(path):
+		print("load: ", path)
 		return load(path)
 	elif FileAccess.file_exists(path_skin_placeholder):
+		print("load: ", path_skin_placeholder)
 		load_fail_emit(category)
 		return load(path_skin_placeholder)
-	elif FileAccess.file_exists(path_placeholder):
-		load_fail_emit(category)
-		return load(path_placeholder)
-	elif FileAccess.file_exists(path_placeholder_placeholder):
-		load_fail_emit(category)
-		return load(path_placeholder_placeholder)
+	#elif FileAccess.file_exists(path_placeholder):
+	#	print("load: ", path_placeholder)
+	#	load_fail_emit(category)
+	#	return load(path_placeholder)
+	#elif FileAccess.file_exists(path_placeholder_placeholder):
+	#	print("load: ", path_placeholder_placeholder)
+	#	load_fail_emit(category)
+	#	return load(path_placeholder_placeholder)
+		
+	print("loadfail: ", v)
 	load_fail_emit(category)
-	return null
+	return load(path_placeholder)
 
 func load_fail_emit(category):
 	if category == "img":

@@ -9,9 +9,10 @@ var title_pr = preload("res://tscn/title.tscn")
 
 var fail_f := false
 
+
 func _ready():
-	Game.img_load_fail.connect(func(): $error/error_img.show())
-	Game.sound_load_fail.connect(func(): $error/error_sound.show())
+	#Game.img_load_fail.connect(func(): $error/error_img.show()) # TODO あとで時間で消えるように
+	#Game.sound_load_fail.connect(func(): $error/error_sound.show())
 	$merge.stream = Game.load_asset("sound", "merge")
 	$drop.stream = Game.load_asset("sound", "drop")
 	$bgm.stream = Game.load_asset("sound", "bgm")
