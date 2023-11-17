@@ -10,6 +10,7 @@ var title_pr = preload("res://tscn/title.tscn")
 var fail_f := false
 
 func _ready():
+	$chr.texture = load("res://asset/img/" + Game.skin_path + "/cloud.png")
 	Game.fail.connect(failed)
 	var title = title_pr.instantiate()
 	add_child(title)

@@ -51,6 +51,7 @@ var mod_info := {
 }
 
 func _ready():
+	skin_path = File.f_read("res://asset/image_path.txt")
 	get_window().title = engine_info.name + " " + engine_info.version + " - " + mod_info.name
 	merge_status.resize(MAX_LVL)
 	merge_status.fill(0)
