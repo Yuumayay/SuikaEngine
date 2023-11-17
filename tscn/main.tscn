@@ -1,16 +1,73 @@
-[gd_scene load_steps=8 format=3 uid="uid://clx0hqr3btgav"]
+[gd_scene load_steps=24 format=3 uid="uid://clx0hqr3btgav"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_ibmcn"]
-[ext_resource type="Texture2D" uid="uid://crurq1e4o5w87" path="res://icon.svg" id="2_2lnnv"]
+[ext_resource type="Texture2D" uid="uid://clnegkc5ovvlo" path="res://asset/img/placeholder/cloud.png" id="2_jvmc8"]
 [ext_resource type="AudioStream" uid="uid://rn7gk308g2eg" path="res://asset/sound/merge.ogg" id="3_qb5sq"]
 [ext_resource type="AudioStream" uid="uid://cp4d62xhup6wv" path="res://asset/sound/drop.ogg" id="4_6iqo7"]
 [ext_resource type="AudioStream" uid="uid://ca4p3iv16ou1y" path="res://asset/sound/bgm.ogg" id="4_sj45h"]
+[ext_resource type="Texture2D" uid="uid://10fgvma2fgmr" path="res://asset/img/placeholder/bubble.png" id="6_g6h84"]
+[ext_resource type="AudioStream" uid="uid://c3esh1pyo0cun" path="res://asset/sound/fail.ogg" id="6_q1dec"]
+[ext_resource type="FontFile" uid="uid://cthjalf0afbp4" path="res://asset/font/RocknRollOne-Regular.ttf" id="8_dgf1y"]
+[ext_resource type="Shader" path="res://asset/shader/barrel_blur.gdshader" id="9_hn2ef"]
+[ext_resource type="Shader" path="res://asset/shader/sobel.gdshader" id="10_alpri"]
+[ext_resource type="Shader" path="res://asset/shader/grayscale.gdshader" id="11_4i8hl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ogmh"]
 size = Vector2(69, 535)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wocm"]
 size = Vector2(479, 74)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jknm2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0vj57"]
+bg_color = Color(0.690196, 0.490196, 0.27451, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0ggm"]
+bg_color = Color(1, 0.792157, 0.470588, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw2c0"]
+bg_color = Color(0.8, 0.65098, 0.407843, 1)
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etlxp"]
+bg_color = Color(1, 1, 0.584314, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcb4q"]
+bg_color = Color(0.839216, 0.839216, 0.839216, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jh27"]
+bg_color = Color(0.772549, 0.458824, 0.188235, 1)
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7n3f1"]
+shader = ExtResource("9_hn2ef")
+shader_parameter/barrel = 0.0
+shader_parameter/zoom = 1.0
+shader_parameter/doChroma = true
+shader_parameter/angle = 0.0
+shader_parameter/iTime = null
+shader_parameter/x = null
+shader_parameter/y = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jl367"]
+shader = ExtResource("10_alpri")
+shader_parameter/strength = 0.0
+shader_parameter/intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fhij"]
+shader = ExtResource("11_4i8hl")
+shader_parameter/strength = 0.0
 
 [node name="main" type="Node"]
 script = ExtResource("1_ibmcn")
@@ -21,6 +78,7 @@ position = Vector2(411, 177)
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
 offset_right = 7.0
 offset_bottom = 420.0
+color = Color(0.470588, 0.145098, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-27, 152.5)
@@ -32,6 +90,7 @@ position = Vector2(759, 177)
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D2"]
 offset_right = 7.0
 offset_bottom = 420.0
+color = Color(0.470588, 0.145098, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(34, 152)
@@ -44,15 +103,17 @@ position = Vector2(419, 590)
 offset_left = -8.0
 offset_right = 347.0
 offset_bottom = 7.0
+color = Color(0.470588, 0.145098, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(169.5, 37)
 shape = SubResource("RectangleShape2D_0wocm")
 
 [node name="chr" type="Sprite2D" parent="."]
-position = Vector2(660, 64)
+position = Vector2(661, 104)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_2lnnv")
+texture = ExtResource("2_jvmc8")
+offset = Vector2(120, -80)
 
 [node name="clamp1" type="Node2D" parent="."]
 position = Vector2(420, 12)
@@ -70,6 +131,9 @@ volume_db = 10.0
 [node name="bgm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_sj45h")
 
+[node name="fail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_q1dec")
+
 [node name="line" type="ColorRect" parent="."]
 offset_left = 418.0
 offset_top = 219.0
@@ -77,13 +141,458 @@ offset_right = 759.0
 offset_bottom = 223.0
 color = Color(1, 0, 0, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="bg" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="rect" type="ColorRect" parent="bg"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(1, 0.792157, 0.513726, 1)
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="next" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="ui/next"]
+self_modulate = Color(1, 1, 1, 0.568627)
+offset_left = 898.0
+offset_top = 92.0
+offset_right = 1055.0
+offset_bottom = 249.0
+texture = ExtResource("6_g6h84")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ui/next/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="TextureRect" type="TextureRect" parent="ui/next/TextureRect/MarginContainer"]
+layout_mode = 2
+expand_mode = 1
+
+[node name="Label" type="Label" parent="ui/next"]
+offset_left = 897.0
+offset_top = 14.0
+offset_right = 1057.0
+offset_bottom = 76.0
+theme_override_colors/font_color = Color(1, 0.94902, 0.878431, 1)
+theme_override_colors/font_shadow_color = Color(0.815686, 0.635294, 0, 1)
+theme_override_colors/font_outline_color = Color(0.509804, 0.356863, 0.168627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 40
+text = "ネクスト"
+
+[node name="score" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="ui/score"]
+self_modulate = Color(1, 1, 1, 0.47451)
+layout_mode = 0
+offset_left = 26.0
+offset_top = 49.0
+offset_right = 274.0
+offset_bottom = 297.0
+texture = ExtResource("6_g6h84")
+expand_mode = 1
+
+[node name="cur" type="Label" parent="ui/score"]
+layout_mode = 2
+offset_left = 26.0
+offset_top = 97.0
+offset_right = 274.0
+offset_bottom = 188.0
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 60
+text = "0"
+horizontal_alignment = 1
+
+[node name="best" type="Label" parent="ui/score"]
+layout_mode = 2
+offset_left = 26.0
+offset_top = 217.0
+offset_right = 274.0
+offset_bottom = 308.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.556863, 0.556863, 0.556863, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="ui/score"]
+layout_mode = 2
+offset_left = 26.0
+offset_top = 196.0
+offset_right = 274.0
+offset_bottom = 287.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.556863, 0.556863, 0.556863, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 20
+text = "BEST SCORE"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ui/score"]
+offset_left = 74.0
+offset_top = 16.0
+offset_right = 224.0
+offset_bottom = 92.0
+theme_override_colors/font_color = Color(1, 0.94902, 0.878431, 1)
+theme_override_colors/font_shadow_color = Color(0.815686, 0.635294, 0, 1)
+theme_override_colors/font_outline_color = Color(0.509804, 0.356863, 0.168627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 50
+text = "スコア"
+
+[node name="evo" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="ui/evo"]
+modulate = Color(0.517647, 1, 0.545098, 1)
+material = SubResource("ShaderMaterial_jknm2")
+layout_mode = 0
+offset_left = 874.0
+offset_top = 308.0
+offset_right = 1089.0
+offset_bottom = 523.0
+texture = ExtResource("6_g6h84")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="ui/evo"]
+offset_left = 891.0
+offset_top = 279.0
+offset_right = 1091.0
+offset_bottom = 341.0
+theme_override_colors/font_color = Color(1, 0.94902, 0.878431, 1)
+theme_override_colors/font_shadow_color = Color(0.815686, 0.635294, 0, 1)
+theme_override_colors/font_outline_color = Color(0.509804, 0.356863, 0.168627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 35
+text = "シンカの輪"
+
+[node name="info" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cur" type="Label" parent="ui/info"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1007.0
+offset_top = 540.0
+offset_right = 1148.0
+offset_bottom = 587.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 30
+text = "1ゲーム目"
+horizontal_alignment = 2
+
+[node name="ver" type="Label" parent="ui/info"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1009.0
+offset_top = 591.0
+offset_right = 1149.0
+offset_bottom = 643.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.556863, 0.556863, 0.556863, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 15
+text = "Suika Engine v1.0
+スイカゲーム v1.0"
+horizontal_alignment = 2
+
+[node name="ranking" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="ui/ranking"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 326.0
+offset_right = 276.0
+offset_bottom = 630.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0vj57")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui/ranking/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 225
+
+[node name="Panel" type="Panel" parent="ui/ranking/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m0ggm")
+
+[node name="Label2" type="Label" parent="ui/ranking/Panel/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94902, 0.878431, 1)
+theme_override_colors/font_shadow_color = Color(0.815686, 0.635294, 0, 1)
+theme_override_colors/font_outline_color = Color(0.509804, 0.356863, 0.168627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 25
+text = "スコアランキング"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ui/ranking/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="ui/ranking/Panel/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qw2c0")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui/ranking/Panel/MarginContainer2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="2" type="Panel" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_etlxp")
+
+[node name="Label" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/2"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 69.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 30
+text = "1st"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/2"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -136.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="1" type="Panel" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dcb4q")
+
+[node name="Label2" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/1"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 69.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 25
+text = "2nd"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/1"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -136.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="0" type="Panel" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1jh27")
+
+[node name="Label3" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/0"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 68.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 25
+text = "3rd"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="ui/ranking/Panel/MarginContainer2/Panel/MarginContainer/VBoxContainer/0"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -137.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("8_dgf1y")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="input_desc" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="ui/input_desc"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.411765, 0.25098, 0.12549, 1)
+theme_override_fonts/font = ExtResource("8_dgf1y")
+text = "[Click] or [Space] 落とす    [R] ゲームオーバー"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="shader" type="CanvasLayer" parent="."]
+
+[node name="barrel" type="ColorRect" parent="shader"]
+material = SubResource("ShaderMaterial_7n3f1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="shader2" type="CanvasLayer" parent="."]
+
+[node name="sobel" type="ColorRect" parent="shader2"]
+material = SubResource("ShaderMaterial_jl367")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="shader3" type="CanvasLayer" parent="."]
+
+[node name="grayscale" type="ColorRect" parent="shader3"]
+material = SubResource("ShaderMaterial_4fhij")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="objects" type="Node2D" parent="."]

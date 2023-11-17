@@ -11,16 +11,21 @@ const STOPED := 5.0
 const HITBOX_SIZE_OFFSET := 3.0
 const SCALE_MULTI := 0.025
 const SCALE_OFFSET := 0.05
-const LEVEL_MULTI := 0.125
+const LEVEL_MULTI := 0.1
 
 func init(level = 1):
+	Game.fail.connect(failed)
 	lvl = level
+	var path = "res://asset/img/" + Game.skin_path + "/lv" + str(lvl) + ".png"
 	var scale_v = Vector2.ONE * (lvl * (lvl * LEVEL_MULTI)) * SCALE_MULTI + Vector2.ONE * SCALE_OFFSET
 	freeze = true
 	$shape.shape = CircleShape2D.new()
 	$hitbox/shape.shape = CircleShape2D.new()
 	$spr.scale = scale_v
-	$spr.texture = load("res://asset/img/" + Game.skin_path + "/lv" + str(lvl) + ".png")
+	if FileAccess.file_exists(path):
+		$spr.texture = load(path)
+	else:
+		$spr.texture = load("res://asset/img/" + Game.skin_path + "/placeholder.png")
 	$shape.shape.radius = ($spr.get_rect().size.x / 2.0) * $spr.scale.x
 	$hitbox/shape.shape.radius = ($spr.get_rect().size.x / 2.0 + HITBOX_SIZE_OFFSET) * $spr.scale.x
 
@@ -28,22 +33,32 @@ func _ready():
 	set_process(false)
 
 func drop():
-	print(timer)
 	state = DROP
 	set_process(true)
 	set_deferred("freeze", false)
 
-var timer = 0.5
+var timer = 1.0
+var placed := false
+
+const FAIL_LINE_POS := Vector2(0, 219)
 
 func _process(delta):
 	timer -= delta
-	if abs(linear_velocity.x) + abs(linear_velocity.y) <= STOPED and timer <= 0.0:
-		obj_placed.emit()
-		set_process(false)
-		if position.y <= 219 - ($spr.get_rect().size.x / 2.0) * $spr.scale.x:
+	if timer <= 0.0: # abs(linear_velocity.x) + abs(linear_velocity.y) <= STOPED
+		if position.y <= FAIL_LINE_POS.y - ($spr.get_rect().size.x / 2.0) * $spr.scale.x:
 			printerr("fail")
+			Game.fail.emit()
+			set_process(false)
+			return
+		if !placed:
+			obj_placed.emit()
+			placed = true
 
 func _on_hitbox_body_entered(body):
-	if "lvl" in body and lvl == body.lvl and body != self and state == DROP and body.state == DROP:
+	if "lvl" in body and lvl == body.lvl and body != self and state == DROP and body.state == DROP and lvl != Game.MAX_LVL:
 		obj_placed.emit()
 		Game.merge(self, position, lvl)
+
+func failed():
+	set_deferred("freeze", true)
+	set_process(false)

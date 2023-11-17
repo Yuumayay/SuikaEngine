@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://g2jbe10bohkh"]
+
+[ext_resource type="FontFile" uid="uid://cthjalf0afbp4" path="res://asset/font/RocknRollOne-Regular.ttf" id="1_1ani2"]
+[ext_resource type="Script" path="res://src/title.gd" id="1_ysalk"]
+[ext_resource type="Texture2D" uid="uid://bmuys4boay0y2" path="res://asset/img/placeholder/lv11.png" id="2_uixl1"]
+
+[node name="title" type="CanvasLayer"]
+script = ExtResource("1_ysalk")
+
+[node name="bg" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.756863)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 444.0
+offset_top = 41.0
+offset_right = 703.0
+offset_bottom = 300.0
+texture = ExtResource("2_uixl1")
+expand_mode = 1
+
+[node name="mod_title" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -203.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.631373, 0.454902, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_1ani2")
+theme_override_font_sizes/font_size = 100
+text = "スイカゲーム"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mod_ver" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 186.0
+offset_bottom = -203.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.631373, 0.454902, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_1ani2")
+theme_override_font_sizes/font_size = 50
+text = "v1.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -333.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_1ani2")
+theme_override_font_sizes/font_size = 50
+text = "Press Space Key"
+horizontal_alignment = 1
+vertical_alignment = 1

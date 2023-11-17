@@ -1,0 +1,140 @@
+[gd_scene load_steps=3 format=3 uid="uid://bin62074jsuep"]
+
+[ext_resource type="Script" path="res://src/fail.gd" id="1_djrbt"]
+[ext_resource type="FontFile" uid="uid://cthjalf0afbp4" path="res://asset/font/RocknRollOne-Regular.ttf" id="2_2cu5p"]
+
+[node name="fail" type="CanvasLayer"]
+script = ExtResource("1_djrbt")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bg" type="ColorRect" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.772549)
+
+[node name="Label2" type="Label" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -407.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.517647, 0.435294, 0.968627, 1)
+theme_override_colors/font_outline_color = Color(0.192157, 0, 0.568627, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 100
+text = "ゲームオーバー"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 100
+text = "1000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(0.415686, 0.294118, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 60
+text = "Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 386.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 50
+text = "Press Space Key"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ui"]
+offset_left = 891.0
+offset_top = 569.0
+offset_right = 1139.0
+offset_bottom = 631.0
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 30
+text = "画面を見る"
+
+[node name="screen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label4" type="Label" parent="screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -551.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.517647, 0.435294, 0.968627, 1)
+theme_override_colors/font_outline_color = Color(0.192157, 0, 0.568627, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 50
+text = "ゲームオーバー"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="screen"]
+offset_left = 891.0
+offset_top = 569.0
+offset_right = 1139.0
+offset_bottom = 631.0
+theme_override_fonts/font = ExtResource("2_2cu5p")
+theme_override_font_sizes/font_size = 30
+text = "リザルトへ"
+
+[connection signal="mouse_entered" from="ui/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="ui/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="ui/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="screen/Button2" to="." method="_on_button_2_pressed"]
