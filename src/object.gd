@@ -16,18 +16,14 @@ const LEVEL_MULTI := 0.1
 func init(level = 1):
 	Game.fail.connect(failed)
 	lvl = level
-	var path = "res://asset/img/" + Game.skin_path + "/lv" + str(lvl) + ".png"
 	var scale_v = Vector2.ONE * (lvl * (lvl * LEVEL_MULTI)) * SCALE_MULTI + Vector2.ONE * SCALE_OFFSET
 	freeze = true
 	$shape.shape = CircleShape2D.new()
 	$hitbox/shape.shape = CircleShape2D.new()
 	$spr.scale = scale_v
-	if FileAccess.file_exists(path):
-		$spr.texture = load(path)
-	else:
-		$spr.texture = load("res://asset/img/" + Game.skin_path + "/placeholder.png")
-	$shape.shape.radius = ($spr.get_rect().size.x / 2.0) * $spr.scale.x
-	$hitbox/shape.shape.radius = ($spr.get_rect().size.x / 2.0 + HITBOX_SIZE_OFFSET) * $spr.scale.x
+	$spr.texture = Game.load_asset("img", "lv" + str(lvl))
+	$shape.shape.radius = ($spr.get_rect().size.x / 2.0) * scale_v.x
+	$hitbox/shape.shape.radius = ($spr.get_rect().size.x / 2.0 + HITBOX_SIZE_OFFSET) * scale_v.x
 
 func _ready():
 	set_process(false)

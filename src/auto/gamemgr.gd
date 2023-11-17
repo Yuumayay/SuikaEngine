@@ -2,6 +2,10 @@ extends Node
 
 # 失敗シグナル
 signal fail
+# 一部の画像のロードに失敗
+signal img_load_fail
+# 一部の音声のロードに失敗
+signal sound_load_fail
 # オブジェクトのプリロード
 var obj_pr = preload("res://tscn/object.tscn")
 # ロードするスキンファイル
@@ -50,9 +54,14 @@ var mod_info := {
 	"version": "1.0"
 }
 
+const MOD_PATH_PATH = "res://asset/mod_path.txt"
+const MOD_INFO_PATH = "res://asset/mod_info.txt"
+const SUIKA_DATA = "user://suika_engine_data.json"
+
+
 func _ready():
-	skin_path = File.f_read("res://asset/image_path.txt")
-	var info = File.f_read("res://asset/mod_info.txt").replace("\r", "").split("\n")
+	skin_path = File.f_read(MOD_PATH_PATH)
+	var info = File.f_read(MOD_INFO_PATH).replace("\r", "").split("\n")
 	mod_info.name = info[0]
 	mod_info.version = info[1]
 	print(info)
@@ -61,7 +70,7 @@ func _ready():
 	merge_status.fill(0)
 	score_ranking.resize(RANKING_SIZE)
 	score_ranking.fill([0, 0])
-	if !FileAccess.file_exists("user://suika_engine_data.json"):
+	if !FileAccess.file_exists(SUIKA_DATA):
 		save_(true)
 	load_()
 	$/root/main/ui/score/best.text = str(high_score)
@@ -151,7 +160,7 @@ func merge_add(v):
 	merge_status[v] += 1
 
 func load_():
-	var dict: Dictionary = File.f_read("user://suika_engine_data.json")
+	var dict: Dictionary = File.f_read(SUIKA_DATA)
 	if !dict.has(mod_info.name):
 		dict = save_()
 	for i in dict[mod_info.name].keys():
@@ -170,9 +179,9 @@ func save_(init = false):
 			"score_ranking": score_ranking,
 			"game_index": game_index
 		}
-		read = File.f_read("user://suika_engine_data.json")
+		read = File.f_read(SUIKA_DATA)
 	read[mod_info.name] = dict
-	File.f_save("user://suika_engine_data.json", read)
+	File.f_save(SUIKA_DATA, read)
 	print("saved: ", read)
 	return read
 
@@ -186,3 +195,43 @@ func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		print("closed")
 		save_()
+
+const ASSET_PATH := "res://asset/"
+
+func load_asset(category, v):
+	var ext: String
+	if category == "img":
+		ext = ".png"
+	elif category == "sound":
+		ext = ".ogg"
+	var path = ASSET_PATH + category + "/" + skin_path + "/" + v + ext
+	var path_skin_placeholder = ASSET_PATH + category + "/" + skin_path + "/placeholder" + ext
+	var path_placeholder = ASSET_PATH + category + "/placeholder/" + v + ext
+	var path_placeholder_placeholder = ASSET_PATH + category + "/placeholder/placeholder" + ext
+	if FileAccess.file_exists(path):
+		return load(path)
+	elif FileAccess.file_exists(path_skin_placeholder):
+		load_fail_emit(category)
+		return load(path_skin_placeholder)
+	elif FileAccess.file_exists(path_placeholder):
+		load_fail_emit(category)
+		return load(path_placeholder)
+	elif FileAccess.file_exists(path_placeholder_placeholder):
+		load_fail_emit(category)
+		return load(path_placeholder_placeholder)
+	load_fail_emit(category)
+	return null
+
+func load_fail_emit(category):
+	if category == "img":
+		img_load_fail.emit()
+	elif category == "sound":
+		sound_load_fail.emit()
+
+func data_reset():
+	var dict: Dictionary = File.f_read(SUIKA_DATA)
+	dict[mod_info.name].clear()
+	File.f_save(SUIKA_DATA, dict)
+
+func all_data_reset():
+	save_(true)

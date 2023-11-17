@@ -1,12 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://clx0hqr3btgav"]
+[gd_scene load_steps=20 format=3 uid="uid://clx0hqr3btgav"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_ibmcn"]
 [ext_resource type="Texture2D" uid="uid://clnegkc5ovvlo" path="res://asset/img/placeholder/cloud.png" id="2_jvmc8"]
-[ext_resource type="AudioStream" uid="uid://rn7gk308g2eg" path="res://asset/sound/merge.ogg" id="3_qb5sq"]
-[ext_resource type="AudioStream" uid="uid://cp4d62xhup6wv" path="res://asset/sound/drop.ogg" id="4_6iqo7"]
-[ext_resource type="AudioStream" uid="uid://ca4p3iv16ou1y" path="res://asset/sound/bgm.ogg" id="4_sj45h"]
 [ext_resource type="Texture2D" uid="uid://10fgvma2fgmr" path="res://asset/img/placeholder/bubble.png" id="6_g6h84"]
-[ext_resource type="AudioStream" uid="uid://c3esh1pyo0cun" path="res://asset/sound/fail.ogg" id="6_q1dec"]
 [ext_resource type="FontFile" uid="uid://cthjalf0afbp4" path="res://asset/font/RocknRollOne-Regular.ttf" id="8_dgf1y"]
 [ext_resource type="Shader" path="res://asset/shader/barrel_blur.gdshader" id="9_hn2ef"]
 [ext_resource type="Shader" path="res://asset/shader/sobel.gdshader" id="10_alpri"]
@@ -122,17 +118,13 @@ position = Vector2(420, 12)
 position = Vector2(758, 8)
 
 [node name="merge" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_qb5sq")
 
 [node name="drop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_6iqo7")
 volume_db = 10.0
 
 [node name="bgm" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_sj45h")
 
 [node name="fail" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_q1dec")
 
 [node name="line" type="ColorRect" parent="."]
 offset_left = 418.0
@@ -596,3 +588,30 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="objects" type="Node2D" parent="."]
+
+[node name="error" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="error_img" type="Label" parent="error"]
+visible = false
+offset_left = 12.0
+offset_top = 583.0
+offset_right = 625.0
+offset_bottom = 610.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+text = "一部の画像が欠けています。欠けている画像は仮置き画像に置き換わります。"
+
+[node name="error_sound" type="Label" parent="error"]
+visible = false
+offset_left = 12.0
+offset_top = 612.0
+offset_right = 625.0
+offset_bottom = 639.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_dgf1y")
+text = "一部の音声が欠けています。欠けている音声は仮置き音声に置き換わります。"

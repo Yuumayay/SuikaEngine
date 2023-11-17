@@ -70,3 +70,38 @@ theme_override_font_sizes/font_size = 50
 text = "Press Space Key"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="all_reset" type="Button" parent="."]
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 150.0
+offset_bottom = 56.0
+focus_mode = 1
+theme_override_colors/font_color = Color(0.533333, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_1ani2")
+text = "全データリセット"
+
+[node name="reset" type="Button" parent="."]
+offset_left = 8.0
+offset_top = 62.0
+offset_right = 150.0
+offset_bottom = 107.0
+focus_mode = 1
+theme_override_colors/font_color = Color(0.533333, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_1ani2")
+text = "データリセット"
+
+[connection signal="mouse_entered" from="all_reset" to="." method="_on_all_reset_mouse_entered"]
+[connection signal="mouse_exited" from="all_reset" to="." method="_on_all_reset_mouse_exited"]
+[connection signal="pressed" from="all_reset" to="." method="_on_all_reset_pressed"]
+[connection signal="mouse_entered" from="reset" to="." method="_on_reset_mouse_entered"]
+[connection signal="mouse_exited" from="reset" to="." method="_on_reset_mouse_exited"]
+[connection signal="pressed" from="reset" to="." method="_on_reset_pressed"]

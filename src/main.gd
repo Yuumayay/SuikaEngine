@@ -10,7 +10,13 @@ var title_pr = preload("res://tscn/title.tscn")
 var fail_f := false
 
 func _ready():
-	$chr.texture = load("res://asset/img/" + Game.skin_path + "/cloud.png")
+	Game.img_load_fail.connect(func(): $error/error_img.show())
+	Game.sound_load_fail.connect(func(): $error/error_sound.show())
+	$merge.stream = Game.load_asset("sound", "merge")
+	$drop.stream = Game.load_asset("sound", "drop")
+	$bgm.stream = Game.load_asset("sound", "bgm")
+	$fail.stream = Game.load_asset("sound", "fail")
+	$chr.texture = Game.load_asset("img", "cloud")
 	Game.fail.connect(failed)
 	var title = title_pr.instantiate()
 	add_child(title)
@@ -52,12 +58,7 @@ func evo_set():
 	var rect = $ui/evo/TextureRect
 	for i in range(Game.MAX_LVL):
 		var new_rect = TextureRect.new()
-		var path = "res://asset/img/" + Game.skin_path + "/lv" + str(i + 1) + ".png"
-		var tex
-		if FileAccess.file_exists(path):
-			tex = load(path)
-		else:
-			tex = load("res://asset/img/" + Game.skin_path + "/placeholder.png")
+		var tex = Game.load_asset("img", "lv" + str(i + 1))
 		var size = rect.size / 2.0
 		var center = rect.position + size
 		var distance = 75
@@ -79,12 +80,7 @@ func info_set():
 
 func next_set():
 	var rect = $ui/next/TextureRect/MarginContainer/TextureRect
-	var path = "res://asset/img/" + Game.skin_path + "/lv" + str(Game.next_obj) + ".png"
-	var tex
-	if FileAccess.file_exists(path):
-		tex = load(path)
-	else:
-		tex = load("res://asset/img/" + Game.skin_path + "/placeholder.png")
+	var tex = Game.load_asset("img", "lv" + str(Game.next_obj))
 	rect.texture = tex
 
 func _process(delta):
