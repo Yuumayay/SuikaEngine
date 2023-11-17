@@ -50,7 +50,7 @@ var engine_info := {
 }
 
 var mod_info := {
-	"name": "スイカゲーム",
+	"name": "スイカエンジン",
 	"version": "1.0"
 }
 

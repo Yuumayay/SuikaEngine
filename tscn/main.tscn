@@ -336,7 +336,7 @@ theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("8_dgf1y")
 theme_override_font_sizes/font_size = 15
 text = "Suika Engine v1.0
-スイカゲーム v1.0"
+スイカエンジン v1.0"
 horizontal_alignment = 2
 
 [node name="ranking" type="Control" parent="ui"]
